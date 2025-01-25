@@ -17,9 +17,9 @@ export default function Page() {
   return (
     <div>
       {display === "webcam" ? (
-        <WebcamDisplay fname={"joebaeda"} fid={"891914"} />
+        <WebcamDisplay />
       ) : (
-        <UploadDisplay fname={"joebaeda"} fid={"891914"} />
+        <UploadDisplay />
       )}
       <Sidebar side="right" variant="sidebar" collapsible="offcanvas">
         <SidebarContent>

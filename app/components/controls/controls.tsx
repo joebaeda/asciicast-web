@@ -1,7 +1,8 @@
 "use client"
 
 import { ArrowLeftRight, Lock, RefreshCcw, Unlock } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Image from 'next/image';
 
 import { useAsciiProvider } from "@/context/AsciiProvider";
 import {
@@ -30,9 +31,17 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "../../components/ui/tooltip";
-import { BaseError, useBalance, useChainId, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { BaseError, useAccount, useBalance, useChainId, useDisconnect, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { asciiCastAbi, asciiCastAddress } from "@/lib/contract";
 import { base } from "wagmi/chains";
+import { Card, CardHeader } from "../ui/card";
+
+type UserData = {
+  name: string;
+  fname: string;
+  pfp: string;
+  fid: string;
+}
 
 export function Controls() {
   const { config, updateConfig } = useAsciiProvider();
@@ -42,6 +51,12 @@ export function Controls() {
     config.outputWidth / config.outputHeight,
   );
   const [isInverted, setIsInverted] = useState(false);
+  const [profile, setProfile] = useState<UserData>({
+    name: "",
+    fname: "",
+    pfp: "",
+    fid: "",
+  })
 
   // Wagmi
   const contractBalance = useBalance({
@@ -50,6 +65,8 @@ export function Controls() {
   })
 
   const chainId = useChainId();
+  const { address, isConnected } = useAccount()
+  const { disconnect } = useDisconnect()
   const { data: hash, error, isPending, writeContract } = useWriteContract()
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({
@@ -70,6 +87,42 @@ export function Controls() {
       console.log(error)
     }
   }
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        if (isConnected) {
+          // Check if user data is in localStorage first
+          const storedData = localStorage.getItem(`userData-${address}`);
+          
+          if (storedData) {
+            // If data is found in localStorage, use it
+            setProfile(JSON.parse(storedData));
+          } else {
+            // If data is not found, call the API to fetch it
+            const res = await fetch(`/api/idOf/${address}`, {
+              method: 'GET',
+            });
+
+            if (!res.ok) {
+              throw new Error(`Failed to fetch user data: ${res.statusText}`);
+            }
+
+            const userData: UserData = await res.json();
+            setProfile(userData); // Populate profile state
+            
+            // Save the fetched data to localStorage
+            localStorage.setItem(`userData-${address}`, JSON.stringify(userData));
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching user data:', err);
+      }
+    }
+
+    // Call fetchData when address or isConnected changes
+    fetchData();
+  }, [address, isConnected]);
 
   function handleWidthChange(width: number) {
     if (isAspectRatioLocked) {
@@ -113,30 +166,54 @@ export function Controls() {
         <SidebarSeparator className="-ml-2 -mr-2 mt-2" />
       </div>
 
-      <div className="mb-1 flex items-center gap-2">
-        <h2 className="text-sm font-semibold uppercase text-foreground">
-          Controls
-        </h2>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => {
-                updateConfig(DEFAULT_ASCII_CONFIG);
-                setAspectRatio(
-                  DEFAULT_ASCII_CONFIG.outputWidth /
-                  DEFAULT_ASCII_CONFIG.outputHeight,
-                );
-              }}
-              className="size-6 text-muted-foreground"
-            >
-              <RefreshCcw className="!size-3.5" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>Reset</TooltipContent>
-        </Tooltip>
-      </div>
+      {/* Farcaster User */}
+      {isConnected &&
+        <Card>
+          <CardHeader className="flex space-x-3 justify-between items-center">
+            <div className="flex flex-row justify-center items-center space-x-3">
+              <div className="w-16 h-16 rounded-full overflow-hidden">
+                <Image
+                  src={profile.pfp || "/placeholder/pfp.svg"}
+                  alt={profile.name}
+                  width={96}
+                  height={96}
+                  className="object-cover"
+                />
+              </div>
+              <div className="flex flex-col justify-start">
+                <h2 className="text-lg font-bold">{profile.name}</h2>
+                <p className="text-foreground/60">@{profile.fname}</p>
+              </div>
+            </div>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => {
+                    updateConfig(DEFAULT_ASCII_CONFIG);
+                    setAspectRatio(
+                      DEFAULT_ASCII_CONFIG.outputWidth /
+                      DEFAULT_ASCII_CONFIG.outputHeight,
+                    );
+                  }}
+                  className="size-6 m-auto bg-[#333] rounded-full p-4 text-muted-foreground"
+                >
+                  <RefreshCcw className="!size-3.5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Reset</TooltipContent>
+            </Tooltip>
+          </CardHeader>
+          <Button
+            variant="secondary"
+            onClick={() => disconnect()}
+            className="w-full rounded-none text-white bg-pink-900 hover:bg-pink-950"
+          >
+            Sign Out
+          </Button>
+        </Card>
+      }
 
       <div className="flex flex-col gap-2">
         <div className="mb-1 flex items-center gap-2">

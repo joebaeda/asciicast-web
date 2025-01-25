@@ -11,8 +11,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "Ascii Cast | ASCII Art Animation",
@@ -20,11 +18,11 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: "Ascii Cast | Create Art ASCII Animation",
       description: "Convert webcam feeds, or videos into ASCII art Animation and Mint to Base Network",
-      url: baseUrl,
+      url: "https://www.asciicast.com",
       type: 'website',
       images: [
         {
-          url: `${baseUrl}/og-image.jpg`,
+          url: "https://www.asciicast.com/og-image.jpg",
           width: 1200,
           height: 600,
           alt: 'Mint your ASCII Art Animation',
@@ -35,7 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       title: "Ascii Cast | ASCII Art Animation",
       description: "Convert webcam feeds, or videos into ASCII art Animation and Mint to Base Network",
-      images: [`${baseUrl}/og-image.jpg`],
+      images: ["https://www.asciicast.com/og-image.jpg"],
     },
     icons: {
       icon: '/favicon.ico',

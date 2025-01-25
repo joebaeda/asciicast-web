@@ -18,18 +18,20 @@ import {
 import { DisplayCopyButton } from "../../components/display/display-copy-button";
 import { Button } from "../../components/ui/button";
 import { useEffect, useState } from "react";
-import { BaseError, useAccount, useChainId, useConnect, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { BaseError, useAccount, useChainId, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { asciiCastAbi, asciiCastAddress } from "@/lib/contract";
 import { parseEther } from "viem";
 import { base } from "wagmi/chains";
-import { wagmiConfig } from "@/lib/wagmiConfig";
+import { Wallets } from "../wallets";
 
-interface ArtistProps {
-  fname: string
-  fid: string
+type ArtistProps = {
+  name: string;
+  fname: string;
+  pfp: string;
+  fid: string;
 }
 
-export function WebcamDisplay({ fname, fid }: ArtistProps) {
+export function WebcamDisplay() {
   const { config } = useAsciiProvider();
   const {
     isLoading: isWebcamLoading,
@@ -56,10 +58,16 @@ export function WebcamDisplay({ fname, fid }: ArtistProps) {
 
   const [showError, setShowError] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isConnectWalletOpen, setConnectWalletOpen] = useState(false);
+  const [artist, setArtist] = useState<ArtistProps>({
+    name: "",
+    fname: "",
+    pfp: "",
+    fid: "",
+  });
 
   const chainId = useChainId()
-  const { connect } = useConnect()
-  const { isConnected } = useAccount()
+  const { address, isConnected } = useAccount()
   const { data: hash, error, isPending, writeContract } = useWriteContract()
 
   const { data: tokenId } = useReadContract({
@@ -72,6 +80,16 @@ export function WebcamDisplay({ fname, fid }: ArtistProps) {
     useWaitForTransactionReceipt({
       hash,
     })
+
+  useEffect(() => {
+    if (isConnected) {
+      const storedData = localStorage.getItem(`userData-${address}`);
+      if (storedData) {
+        const artistData: ArtistProps = JSON.parse(storedData);
+        setArtist(artistData)
+      }
+    }
+  }, [address, isConnected])
 
   useEffect(() => {
     if (error) {
@@ -142,9 +160,9 @@ export function WebcamDisplay({ fname, fid }: ArtistProps) {
           address: asciiCastAddress as `0x${string}`,
           functionName: "mint",
           value: parseEther("0.003"),
-          args: [`ipfs://${ipfsImageHash}`, `ipfs://${ipfsAnimationHash}`, `@${fname}`, animationColor, animationPreset, String(fid)],
+          args: [`ipfs://${ipfsImageHash}`, `ipfs://${ipfsAnimationHash}`, `@${artist.fname}`, animationColor, animationPreset, String(artist.fid)],
         });
-        
+
         await shareCast()
 
       } else {
@@ -200,10 +218,10 @@ export function WebcamDisplay({ fname, fid }: ArtistProps) {
           </Button>
         ) : (
           <Button
-            onClick={() => connect({ connector: wagmiConfig.connectors[0] })}
-            className="bg-pink-900 hover:bg-pink-950 absolute right-12 px-4 py-2 rounded-full"
+            onClick={() => setConnectWalletOpen(true)}
+            className="bg-pink-900 hover:bg-pink-950 text-white absolute right-12 px-4 py-2 rounded-xl"
           >
-            Connect
+            Connect Wallet
           </Button>
         )}
       </DisplayActionsContainer>
@@ -254,6 +272,26 @@ export function WebcamDisplay({ fname, fid }: ArtistProps) {
             >
               Close
             </Button>
+          </div>
+        </div>
+      )}
+
+      {/* Wallet Options Modal */}
+      {isConnectWalletOpen && (
+        <div className="fixed p-4 inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="relative bg-[#1f1f1f] rounded-2xl p-6 w-full max-w-[384px] shadow-lg">
+            {/* Modal Header */}
+            <div className="absolute top-1 right-2">
+              <button
+                onClick={() => setConnectWalletOpen(false)}
+                className="text-gray-500 hover:text-gray-700 focus:outline-none"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Wallet Options */}
+            <Wallets onConnect={() => setConnectWalletOpen(false)} />
           </div>
         </div>
       )}
