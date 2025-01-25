@@ -1,0 +1,167 @@
+{
+  "name": "ASCII Art Animation",
+  "short_name": "ASCIICAST",
+  "description": "Convert webcam feeds, or videos into ASCII art Animation and Mint to Base Network.",
+  "theme_color": "#17101f",
+  "background_color": "#17101f",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/",
+  "screenshots": [
+    {
+      "src": "/screenshot/homepage_640x320.png",
+      "sizes": "640x320",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "ASCIICAST Widgets"
+    },
+    {
+      "src": "/screenshot/homepage_375x667.png",
+      "sizes": "375x667",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "ASCIICAST Widgets"
+    },
+    {
+      "src": "/screenshot/loginpage_640x320.png",
+      "sizes": "640x320",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "ASCIICAST Widgets"
+    },
+    {
+      "src": "/screenshot/loginpage_375x667.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "ASCIICAST Widgets"
+    },
+    {
+      "src": "/screenshot/displaypage_640x320.png",
+      "sizes": "640x320",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "ASCIICAST Widgets"
+    },
+    {
+      "src": "/screenshot/displaypage_375x667.png",
+      "sizes": "375x667",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "ASCIICAST Widgets"
+    },
+    {
+      "src": "/screenshot/settingpage_640x320.png",
+      "sizes": "640x320",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "ASCIICAST Widgets"
+    },
+    {
+      "src": "/screenshot/settingpage_375x667.png",
+      "sizes": "375x667",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "ASCIICAST Widgets"
+    }
+  ],
+  "icons": [
+    {
+      "purpose": "maskable",
+      "sizes": "512x512",
+      "src": "/icons/maskable_icon.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "/icons/maskable_icon.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "maskable",
+      "sizes": "48x48",
+      "src": "/icons/maskable_icon_x48.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "48x48",
+      "src": "/icons/maskable_icon_x48.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "maskable",
+      "sizes": "72x72",
+      "src": "/icons/maskable_icon_x72.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "72x72",
+      "src": "/icons/maskable_icon_x72.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "maskable",
+      "sizes": "96x96",
+      "src": "/icons/maskable_icon_x96.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "96x96",
+      "src": "/icons/maskable_icon_x96.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "maskable",
+      "sizes": "128x128",
+      "src": "/icons/maskable_icon_x128.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "128x128",
+      "src": "/icons/maskable_icon_x128.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "maskable",
+      "sizes": "192x192",
+      "src": "/icons/maskable_icon_x192.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "192x192",
+      "src": "/icons/maskable_icon_x192.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "maskable",
+      "sizes": "384x384",
+      "src": "/icons/maskable_icon_x384.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "384x384",
+      "src": "/icons/maskable_icon_x384.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "maskable",
+      "sizes": "512x512",
+      "src": "/icons/maskable_icon_x512.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "/icons/maskable_icon_x512.png",
+      "type": "image/png"
+    }
+  ]
+}

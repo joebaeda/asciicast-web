@@ -208,7 +208,7 @@ export function WebcamDisplay() {
           <Button
             onClick={handleMint}
             disabled={!isConnected || !isWebcamActive || !isAsciiActive || chainId !== base.id || isPending || isConfirming || isConfirmed || isGenerating}
-            className="bg-pink-900 hover:bg-pink-950 text-white absolute right-12 px-4 py-2 rounded-xl"
+            className="bg-pink-900 hover:bg-pink-950 text-white absolute right-11 px-3 py-2 rounded-xl"
           >
             {isGenerating ? "Generating..." : isPending
               ? "Confirming..."
@@ -219,9 +219,9 @@ export function WebcamDisplay() {
         ) : (
           <Button
             onClick={() => setConnectWalletOpen(true)}
-            className="bg-pink-900 hover:bg-pink-950 text-white absolute right-12 px-4 py-2 rounded-xl"
+            className="bg-pink-900 hover:bg-pink-950 text-white absolute right-11 px-3 py-2 rounded-xl"
           >
-            Connect Wallet
+            Sign In
           </Button>
         )}
       </DisplayActionsContainer>
@@ -262,34 +262,17 @@ export function WebcamDisplay() {
 
       {/* Transaction Error */}
       {showError && error && (
-        <div className="fixed flex p-4 inset-0 items-center justify-center z-50 bg-gray-900 bg-opacity-65">
-          <div className="w-full h-full items-center justify-center rounded-lg p-4 flex flex-col max-h-[360px] max-w-[360px] mx-auto bg-[#250f31] space-y-4">
+        <div onClick={() => setShowError(false)} className="fixed flex p-4 inset-0 items-center justify-center z-50 bg-gray-900 bg-opacity-65">
+          <div className="w-full h-full items-center justify-center rounded-lg p-4 flex max-h-[360px] max-w-[360px] mx-auto bg-[#250f31] space-y-4">
             <p className="text-center text-white">Error: {(error as BaseError).shortMessage || error.message}</p>
-            <Button
-              onClick={() => setShowError(false)}
-              variant="secondary"
-              disabled={isPending}
-            >
-              Close
-            </Button>
           </div>
         </div>
       )}
 
       {/* Wallet Options Modal */}
       {isConnectWalletOpen && (
-        <div className="fixed p-4 inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="relative bg-[#1f1f1f] rounded-2xl p-6 w-full max-w-[384px] shadow-lg">
-            {/* Modal Header */}
-            <div className="absolute top-1 right-2">
-              <button
-                onClick={() => setConnectWalletOpen(false)}
-                className="text-gray-500 hover:text-gray-700 focus:outline-none"
-              >
-                ✕
-              </button>
-            </div>
-
+        <div onClick={() => setConnectWalletOpen(false)} className="fixed p-4 inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-[#1f1f1f] rounded-2xl p-6 w-full max-w-[384px] shadow-lg">
             {/* Wallet Options */}
             <Wallets onConnect={() => setConnectWalletOpen(false)} />
           </div>

@@ -35,6 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: "Convert webcam feeds, or videos into ASCII art Animation and Mint to Base Network",
       images: ["https://www.asciicast.com/og-image.jpg"],
     },
+    manifest: "/manifest.json",
     icons: {
       icon: '/favicon.ico',
     },
