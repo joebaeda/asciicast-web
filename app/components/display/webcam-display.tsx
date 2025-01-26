@@ -24,6 +24,7 @@ import { parseEther } from "viem";
 import { base } from "wagmi/chains";
 import { Wallets } from "../wallets";
 import Footer from "../footer";
+import InstallPWA from "../pwa/install";
 
 type ArtistProps = {
   name: string;
@@ -251,7 +252,7 @@ export function WebcamDisplay() {
         </div>
       </DisplayCanvasContainer>
       <DisplayFooterContainer>
-      <Footer />
+        <Footer />
       </DisplayFooterContainer>
 
       {/* Transaction Error */}
@@ -272,6 +273,8 @@ export function WebcamDisplay() {
           </div>
         </div>
       )}
+
+      <InstallPWA />
 
     </DisplayContainer>
   );

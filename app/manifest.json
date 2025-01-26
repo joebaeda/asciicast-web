@@ -1,6 +1,6 @@
 {
-  "name": "ASCII Art Animation",
-  "short_name": "ASCIICAST",
+  "name": "Ascii Cast",
+  "short_name": "Ascii Cast",
   "description": "Convert webcam feeds, or videos into ASCII art Animation and Mint to Base Network.",
   "theme_color": "#17101f",
   "background_color": "#17101f",

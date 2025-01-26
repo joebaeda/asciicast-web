@@ -24,6 +24,7 @@ import { base } from "wagmi/chains";
 import { parseEther } from "viem";
 import { Wallets } from "../wallets";
 import Footer from "../footer";
+import InstallPWA from "../pwa/install";
 
 type ArtistProps = {
   name: string;
@@ -298,6 +299,8 @@ export function UploadDisplay() {
           </div>
         </div>
       )}
+
+      <InstallPWA />
 
     </DisplayContainer>
   );
