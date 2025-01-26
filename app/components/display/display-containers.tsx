@@ -14,7 +14,7 @@ export function DisplayActionsContainer({
   children,
 }: DisplayActionsContainerProps) {
   return (
-    <div className="absolute bg-[#17101f] rounded-b-2xl z-20 w-full grid grid-cols-2 items-center gap-1 px-2 py-6 md:py-4 sm:grid-cols-[1fr,auto,1fr]">
+    <div className="fixed top-0 bg-[#17101f] rounded-b-2xl z-20 w-full grid grid-cols-2 items-center gap-1 px-2 py-6 md:py-4 sm:grid-cols-[1fr,auto,1fr]">
       <div className="flex gap-2">{children}</div>
       <DisplayToggle className="hidden sm:block" />
       <SidebarTrigger className="place-self-end" />
@@ -27,7 +27,7 @@ export function DisplayFooterContainer({
   children,
 }: DisplayFooterContainerProps) {
   return (
-    <div className="absolute bottom-0 w-full px-2 py-1 bg-[#17101f] rounded-t-2xl z-20 ">
+    <div className="fixed bottom-0 w-full px-2 py-1 bg-[#17101f] rounded-t-2xl z-20 ">
       {children}
     </div>
   );
