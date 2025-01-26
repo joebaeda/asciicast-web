@@ -23,6 +23,7 @@ import { asciiCastAbi, asciiCastAddress } from "@/lib/contract";
 import { parseEther } from "viem";
 import { base } from "wagmi/chains";
 import { Wallets } from "../wallets";
+import Footer from "../footer";
 
 type ArtistProps = {
   name: string;
@@ -250,14 +251,7 @@ export function WebcamDisplay() {
         </div>
       </DisplayCanvasContainer>
       <DisplayFooterContainer>
-        <div className="flex justify-center items-center">
-          <span className="text-center py-2">Build with <span className="font-extrabold text-red-800">❤</span> by <a
-            href="https://warpcast.com/joebaeda"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-medium text-green-500"
-          >Joe bae</a></span>
-        </div>
+      <Footer />
       </DisplayFooterContainer>
 
       {/* Transaction Error */}

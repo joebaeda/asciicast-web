@@ -40,15 +40,20 @@ function WalletOption({
     }, [connector]);
 
     return (
-        <div className="flex p-2 rounded-2xl justify-start gap-2 items-center bg-[#282828]">
-            <Image className="rounded-2xl w-10 h-10" src={connector.icon || "/icon.jpg"} width={60} priority height={60} alt={connector.name} />
-            <button
-                className="text-xl font-extrabold text-center px-4"
-                disabled={!ready}
-                onClick={onClick}
-            >
-                {connector.name}
-            </button>
-        </div>
+        <button
+            className="w-full flex p-2 rounded-2xl justify-start gap-2 items-center bg-[#282828] hover:bg-[#1d1c1c] text-xl font-extrabold text-center"
+            disabled={!ready}
+            onClick={onClick}
+        >
+            <Image
+                className="rounded-2xl w-10 h-10"
+                src={connector.icon || "/icon.jpg"}
+                width={60}
+                height={60}
+                priority
+                alt={connector.name}
+            />
+            {connector.name}
+        </button>
     );
 }
