@@ -104,7 +104,7 @@ export function WebcamDisplay() {
     try {
 
       const message = {
-        castText: "A NEW ASCII HAS BEEN MINTED ONCHAIN!",
+        castText: "a new ascii video has been minted onchain",
         siteUrl: `https://opensea.io/assets/base/0x837969d05cb1c8108356bc49e58e568c2698d90c/${Number(tokenId) + 1}`,
       }
 
@@ -117,12 +117,12 @@ export function WebcamDisplay() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to share cast.");
+        throw new Error(data.error || "failed to share cast.");
       }
 
-      console.log("Cast shared successfully:", data);
+      console.log("cast shared successfully:", data);
     } catch (error: unknown) {
-      console.error("Error sharing cast:", (error as Error).message);
+      console.error("error sharing cast:", (error as Error).message);
     }
 
   }
@@ -168,10 +168,10 @@ export function WebcamDisplay() {
         await shareCast()
 
       } else {
-        console.error("Failed to mint animation to base")
+        console.error("failed to mint ascii to base")
       }
     } catch (error: unknown) {
-      console.error("Error during minting or sharing:", (error as Error).message);
+      console.error("error during minting or sharing:", (error as Error).message);
     } finally {
       setIsGenerating(false); // Always stop loading indicator
     }
@@ -183,7 +183,7 @@ export function WebcamDisplay() {
         <DisplayActionButton
           onClick={isWebcamActive ? stopWebcam : startWebcam}
           icon={isWebcamActive ? CameraOff : Camera}
-          tooltip={isWebcamActive ? "Stop webcam" : "Start webcam"}
+          tooltip={isWebcamActive ? "stop" : "start"}
           loading={isWebcamLoading}
           disabled={!isConnected}
         />
@@ -191,19 +191,19 @@ export function WebcamDisplay() {
           onClick={toggleAscii}
           icon={!isWebcamActive || !isAsciiActive ? Eye : EyeOff}
           tooltip={
-            !isWebcamActive || !isAsciiActive ? "Show ASCII" : "Hide ASCII"
+            !isWebcamActive || !isAsciiActive ? "show" : "hide"
           }
           disabled={!isConnected || !isWebcamActive || isPending || isConfirming || isConfirmed || isGenerating}
         />
         <DisplayCopyButton
           onCopy={copyAscii}
-          tooltip="Copy ASCII"
+          tooltip="copy"
           disabled={!isConnected || !isWebcamActive || !isAsciiActive || isPending || isConfirming || isConfirmed || isGenerating}
         />
         <DisplayActionButton
           onClick={freeDownload}
           icon={Download}
-          tooltip="Download ASCII"
+          tooltip="download"
           disabled={!isConnected || !isWebcamActive || !isAsciiActive || isPending || isConfirming || isConfirmed || isGenerating}
         />
         {isConnected ? (
@@ -212,18 +212,18 @@ export function WebcamDisplay() {
             disabled={!isConnected || !isWebcamActive || !isAsciiActive || chainId !== base.id || isPending || isConfirming || isConfirmed || isGenerating}
             className="bg-pink-900 hover:bg-pink-950 text-white absolute right-11 px-3 py-2 rounded-xl"
           >
-            {isGenerating ? "Generating..." : isPending
-              ? "Confirming..."
+            {isGenerating ? "generating..." : isPending
+              ? "confirming..."
               : isConfirming
-                ? "Waiting..."
-                : isConfirmed ? "Minted! 🎉" : "Mint to Base"}
+                ? "waiting..."
+                : isConfirmed ? "minted! 🎉" : "mint to base"}
           </Button>
         ) : (
           <Button
             onClick={() => setConnectWalletOpen(true)}
             className="bg-pink-900 hover:bg-pink-950 text-white absolute right-11 px-3 py-2 rounded-xl"
           >
-            Sign In
+            signin
           </Button>
         )}
       </DisplayActionsContainer>
@@ -236,7 +236,7 @@ export function WebcamDisplay() {
             disabled={!isConnected || isWebcamLoading}
           >
             <Camera className="size-4 text-muted-foreground" />
-            Start
+            start
           </Button>
         </DisplayInset>
 
@@ -259,7 +259,7 @@ export function WebcamDisplay() {
       {showError && error && (
         <div onClick={() => setShowError(false)} className="fixed flex p-4 inset-0 items-center justify-center z-50 bg-gray-900 bg-opacity-65">
           <div className="w-full h-full items-center justify-center rounded-lg p-4 flex max-h-[360px] max-w-[360px] mx-auto bg-[#250f31] space-y-4">
-            <p className="text-center text-white">Error: {(error as BaseError).shortMessage || error.message}</p>
+            <p className="text-center text-white">error: {(error as BaseError).shortMessage || error.message}</p>
           </div>
         </div>
       )}

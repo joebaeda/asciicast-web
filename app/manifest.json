@@ -1,7 +1,7 @@
 {
-  "name": "Ascii Cast",
-  "short_name": "Ascii Cast",
-  "description": "Convert webcam feeds, or videos into ASCII art Animation and Mint to Base Network.",
+  "name": "asciicast",
+  "short_name": "asciicast",
+  "description": "convert webcam stream or videos into ascii",
   "theme_color": "#17101f",
   "background_color": "#17101f",
   "display": "standalone",

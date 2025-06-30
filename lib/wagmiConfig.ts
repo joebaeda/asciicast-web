@@ -2,12 +2,12 @@ import { http, createConfig } from "wagmi";
 import { base } from "wagmi/chains";
 import { coinbaseWallet, metaMask, walletConnect } from "wagmi/connectors";
 
-export const wagmiConfig = createConfig({
+export const config = createConfig({
   chains: [base],
   ssr: true,
   connectors: [
     coinbaseWallet({
-      appName: "ASCII Art Animation",
+      appName: "asciicast",
       appLogoUrl: "https://www.asciicast.com/icon.jpg",
       preference: "all",
     }),

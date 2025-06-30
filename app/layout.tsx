@@ -13,11 +13,11 @@ const geistMono = Geist_Mono({
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Ascii Cast | ASCII Art Animation",
-    description: "Convert webcam feeds, or videos into ASCII art Animation and Mint to Base Network",
+    title: "asciicast | video to ascii",
+    description: "convert webcam stream or videos into ascii",
     openGraph: {
-      title: "Ascii Cast | Create Art ASCII Animation",
-      description: "Convert webcam feeds, or videos into ASCII art Animation and Mint to Base Network",
+      title: "asciicast | video to ascii",
+      description: "convert webcam stream or videos into ascii",
       url: "https://www.asciicast.com",
       type: 'website',
       images: [
@@ -25,14 +25,14 @@ export async function generateMetadata(): Promise<Metadata> {
           url: "https://www.asciicast.com/og-image.jpg",
           width: 1200,
           height: 600,
-          alt: 'Mint your ASCII Art Animation',
+          alt: 'video to ascii',
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: "Ascii Cast | ASCII Art Animation",
-      description: "Convert webcam feeds, or videos into ASCII art Animation and Mint to Base Network",
+      title: "asciicast | video to ascii",
+      description: "convert webcam stream or videos into ascii",
       images: ["https://www.asciicast.com/og-image.jpg"],
     },
     manifest: "/manifest.json",

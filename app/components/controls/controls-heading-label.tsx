@@ -9,7 +9,7 @@ export function ControlsHeadingLabel({
   return (
     <Label
       className={cn(
-        "text-xs font-semibold uppercase text-muted-foreground",
+        "text-xs font-semibold text-muted-foreground",
         className,
       )}
       {...props}

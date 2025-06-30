@@ -35,15 +35,14 @@ export async function POST(request: NextRequest) {
             embedsDeprecated: [],
             mentions: [],
             mentionsPositions: [],
-            parentUrl: "https://warpcast.com/~/channel/asciicast",
             type: CastType.CAST,
         };
 
         const castAddReq = await makeCastAdd(castBody, dataOptions, ed25519Signer);
 
         if (castAddReq.isErr()) {
-            console.error("Error in makeCastAdd:", castAddReq.error.message);
-            return NextResponse.json({ error: "Failed to construct cast" }, { status: 400 });
+            console.error("error in makeCastAdd:", castAddReq.error.message);
+            return NextResponse.json({ error: "failed to construct cast" }, { status: 400 });
         }
 
         const castAdd = castAddReq.value;
@@ -56,14 +55,14 @@ export async function POST(request: NextRequest) {
         });
 
         if (!castRequest.ok) {
-            console.error("Failed to submit cast:", castRequest.status, await castRequest.text());
-            return NextResponse.json({ error: "Hub submission failed" }, { status: 500 });
+            console.error("failed to submit cast:", castRequest.status, await castRequest.text());
+            return NextResponse.json({ error: "hub submission failed" }, { status: 500 });
         }
 
         const castResult = await castRequest.json();
         return NextResponse.json({ message: castResult }, { status: 200 });
     } catch (error: unknown) {
-        console.error("Error submitting cast:", (error as Error).message);
-        return NextResponse.json({ error: "Failed to submit message" }, { status: 500 });
+        console.error("error submitting cast:", (error as Error).message);
+        return NextResponse.json({ error: "failed to submit message" }, { status: 500 });
     }
 }

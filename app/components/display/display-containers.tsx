@@ -53,7 +53,7 @@ export function DisplayInset({
   return (
     <div
       className={cn(
-        "absolute inset-0 z-10 grid place-items-center bg-[#17101f96]",
+        "absolute inset-0 z-10 grid place-items-center bg-[#3b2132]",
         className,
       )}
       {...props}

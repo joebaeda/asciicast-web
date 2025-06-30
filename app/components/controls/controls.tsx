@@ -105,7 +105,7 @@ export function Controls() {
             });
 
             if (!res.ok) {
-              throw new Error(`Failed to fetch user data: ${res.statusText}`);
+              throw new Error(`failed to fetch user data: ${res.statusText}`);
             }
 
             const userData: UserData = await res.json();
@@ -116,7 +116,7 @@ export function Controls() {
           }
         }
       } catch (err) {
-        console.error('Error fetching user data:', err);
+        console.error('error fetching user data:', err);
       }
     }
 
@@ -202,7 +202,7 @@ export function Controls() {
                   <RefreshCcw className="!size-3.5" />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Reset</TooltipContent>
+              <TooltipContent>reset</TooltipContent>
             </Tooltip>
           </CardHeader>
           <Button
@@ -210,14 +210,14 @@ export function Controls() {
             onClick={() => disconnect()}
             className="w-full rounded-none text-white bg-pink-900 hover:bg-pink-950"
           >
-            Sign Out
+            signout
           </Button>
         </Card>
       }
 
       <div className="flex flex-col gap-2">
         <div className="mb-1 flex items-center gap-2">
-          <ControlsHeadingLabel>Resolution</ControlsHeadingLabel>
+          <ControlsHeadingLabel>resolution</ControlsHeadingLabel>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
@@ -234,13 +234,13 @@ export function Controls() {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              {isAspectRatioLocked ? "Unlock Ratio" : "Lock Ratio"}
+              {isAspectRatioLocked ? "unlock ratio" : "lock ratio"}
             </TooltipContent>
           </Tooltip>
         </div>
 
         <div className="flex flex-col">
-          <ControlLabel>Width (characters)</ControlLabel>
+          <ControlLabel>width (characters)</ControlLabel>
           <ControlsNumberSlider
             value={config.outputWidth}
             onValueChange={handleWidthChange}
@@ -250,7 +250,7 @@ export function Controls() {
         </div>
 
         <div className="flex flex-col">
-          <ControlLabel>Height (characters)</ControlLabel>
+          <ControlLabel>height (characters)</ControlLabel>
           <ControlsNumberSlider
             value={config.outputHeight}
             onValueChange={handleHeightChange}
@@ -263,10 +263,10 @@ export function Controls() {
       <SidebarSeparator className="-ml-2 -mr-2" />
 
       <div className="flex flex-col gap-2">
-        <ControlsHeadingLabel className="mb-1">Font</ControlsHeadingLabel>
+        <ControlsHeadingLabel className="mb-1">font</ControlsHeadingLabel>
 
         <div className="-mt-0.5 flex flex-col gap-1.5">
-          <ControlLabel>Colour</ControlLabel>
+          <ControlLabel>colour</ControlLabel>
           <ColourInput
             colour={config.colour}
             onChange={(colour) => updateConfig({ colour })}
@@ -274,7 +274,7 @@ export function Controls() {
         </div>
 
         <div className="flex flex-col">
-          <ControlLabel>Size (px)</ControlLabel>
+          <ControlLabel>size (px)</ControlLabel>
           <ControlsNumberSlider
             value={config.fontSize}
             onValueChange={(fontSize) => updateConfig({ fontSize })}
@@ -287,10 +287,10 @@ export function Controls() {
       <SidebarSeparator className="-ml-2 -mr-2" />
 
       <div className="flex flex-col gap-2">
-        <ControlsHeadingLabel className="mb-1">Characters</ControlsHeadingLabel>
+        <ControlsHeadingLabel className="mb-1">characters</ControlsHeadingLabel>
 
         <div className="flex flex-col gap-1.5">
-          <ControlLabel>Preset</ControlLabel>
+          <ControlLabel>preset</ControlLabel>
           <Select
             value={
               ASCII_CHAR_PRESETS.includes(config.chars) ? config.chars : ""
@@ -298,7 +298,7 @@ export function Controls() {
             onValueChange={(value) => updateConfig({ chars: value })}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Select preset" />
+              <SelectValue placeholder="select preset" />
             </SelectTrigger>
             <SelectContent>
               {ASCII_CHAR_PRESETS.map((preset) => (
@@ -311,12 +311,12 @@ export function Controls() {
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <ControlLabel>Custom</ControlLabel>
+          <ControlLabel>custom</ControlLabel>
           <div className="relative flex items-center">
             <Input
               value={config.chars}
               onChange={(e) => updateConfig({ chars: e.target.value })}
-              placeholder="Enter characters..."
+              placeholder="enter characters..."
               className="pr-8"
             />
             <Button
@@ -346,10 +346,10 @@ export function Controls() {
               className="w-full py-5 rounded-xl bg-pink-900 hover:bg-pink-950"
             >
               {isPending
-                ? "Confirming..."
+                ? "confirming..."
                 : isConfirming
-                  ? "Waiting..."
-                  : isConfirmed ? "Got it! 🎉" : "Buy $ASCII"}
+                  ? "waiting..."
+                  : isConfirmed ? "got it! 🎉" : "buy $ASCII"}
             </Button>
           </div>
         )}
@@ -358,13 +358,13 @@ export function Controls() {
         {showError && error && (
           <div className="fixed flex p-4 inset-0 items-center justify-center z-50 bg-gray-900 bg-opacity-65">
             <div className="w-full h-full items-center justify-center rounded-lg p-4 flex flex-col max-h-[360px] max-w-[360px] mx-auto bg-[#250f31] space-y-4">
-              <p className="text-center text-white">Error: {(error as BaseError).shortMessage || error.message}</p>
+              <p className="text-center text-white">error: {(error as BaseError).shortMessage || error.message}</p>
               <Button
                 onClick={() => setShowError(false)}
                 variant="secondary"
                 disabled={isPending}
               >
-                Close
+                close
               </Button>
             </div>
           </div>

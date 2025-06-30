@@ -119,7 +119,7 @@ export function UploadDisplay() {
     try {
 
       const message = {
-        castText: "A NEW ASCII HAS BEEN MINTED ONCHAIN!",
+        castText: "a new ascii video has been minted onchain",
         siteUrl: `https://opensea.io/assets/base/0x837969d05cb1c8108356bc49e58e568c2698d90c/${Number(tokenId) + 1}`,
       }
 
@@ -132,12 +132,12 @@ export function UploadDisplay() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to share cast.");
+        throw new Error(data.error || "failed to share cast.");
       }
 
-      console.log("Cast shared successfully:", data);
+      console.log("cast shared successfully:", data);
     } catch (error: unknown) {
-      console.error("Error sharing cast:", (error as Error).message);
+      console.error("error sharing cast:", (error as Error).message);
     }
 
   }
@@ -173,10 +173,10 @@ export function UploadDisplay() {
         await shareCast()
 
       } else {
-        console.error("Failed to mint animation to base")
+        console.error("failed to mint ascii to base")
       }
     } catch (error: unknown) {
-      console.error("Error during minting or sharing:", (error as Error).message);
+      console.error("error during minting or sharing:", (error as Error).message);
     } finally {
       setIsGenerating(false); // Always stop loading indicator
     }
@@ -189,7 +189,7 @@ export function UploadDisplay() {
         <DisplayActionButton
           onClick={hasUpload ? clear : () => uploadInputRef.current?.click()}
           icon={hasUpload ? X : Upload}
-          tooltip={hasUpload ? "Remove Upload" : "Upload Media"}
+          tooltip={hasUpload ? "remove" : "upload"}
           loading={isUploading}
           disabled={!isConnected}
         />
@@ -209,18 +209,18 @@ export function UploadDisplay() {
         <DisplayActionButton
           onClick={toggleAscii}
           icon={!hasUpload || !isAsciiActive ? Eye : EyeOff}
-          tooltip={!hasUpload || !isAsciiActive ? "Show ASCII" : "Hide ASCII"}
+          tooltip={!hasUpload || !isAsciiActive ? "show" : "hide"}
           disabled={!isConnected || !hasUpload || isPending || isConfirming || isConfirmed || isGenerating}
         />
         <DisplayCopyButton
           onCopy={copyAscii}
-          tooltip="Copy ASCII"
+          tooltip="copy"
           disabled={!isConnected || !hasUpload || !isAsciiActive || isPending || isConfirming || isConfirmed || isGenerating}
         />
         <DisplayActionButton
           onClick={freeDownload}
           icon={Download}
-          tooltip="Download ASCII"
+          tooltip="download"
           disabled={!isConnected || !hasUpload || !isAsciiActive || isPending || isConfirming || isConfirmed || isGenerating}
         />
         {isConnected ? (
@@ -229,18 +229,18 @@ export function UploadDisplay() {
             disabled={!isConnected || !hasUpload || !isAsciiActive || chainId !== base.id || isPending || isConfirming || isConfirmed || isGenerating}
             className="bg-pink-900 hover:bg-pink-950 text-white absolute right-11 px-3 py-2 rounded-xl"
           >
-            {isGenerating ? "Generating..." : isPending
-              ? "Confirming..."
+            {isGenerating ? "generating..." : isPending
+              ? "confirming..."
               : isConfirming
-                ? "Waiting..."
-                : isConfirmed ? "Minted! 🎉" : "Mint to Base"}
+                ? "waiting..."
+                : isConfirmed ? "minted! 🎉" : "mint to base"}
           </Button>
         ) : (
           <Button
             onClick={() => setConnectWalletOpen(true)}
             className="bg-pink-900 hover:bg-pink-950 text-white absolute right-11 px-3 py-2 rounded-xl"
           >
-            Sign In
+            signin
           </Button>
         )}
       </DisplayActionsContainer>
@@ -253,7 +253,7 @@ export function UploadDisplay() {
             disabled={!isConnected || isUploading}
           >
             <Upload className="size-4 text-muted-foreground" />
-            Upload
+            upload
           </Button>
         </DisplayInset>
 
@@ -276,7 +276,7 @@ export function UploadDisplay() {
       {showError && error && (
         <div onClick={() => setShowError(false)} className="fixed flex p-4 inset-0 items-center justify-center z-50 bg-gray-900 bg-opacity-65">
           <div className="w-full h-full items-center justify-center rounded-lg p-4 flex max-h-[360px] max-w-[360px] mx-auto bg-[#250f31] space-y-4">
-            <p className="text-center text-white">Error: {(error as BaseError).shortMessage || error.message}</p>
+            <p className="text-center text-white">error: {(error as BaseError).shortMessage || error.message}</p>
           </div>
         </div>
       )}
@@ -285,7 +285,7 @@ export function UploadDisplay() {
       {onlyVideo && (
         <div onClick={() => setOnlyVideo(false)} className="fixed flex p-4 inset-0 items-center justify-center z-50 bg-gray-900 bg-opacity-65">
           <div className="w-full h-full items-center justify-center rounded-lg p-4 flex max-h-[360px] max-w-[360px] mx-auto bg-[#250f31] space-y-4">
-            <p className="text-center text-white">Sorry, ASCII Art Animation Frame only supports Video to be converted into Animation.</p>
+            <p className="text-center text-white">sorry, asciicast app only supports video to be converted into ascii.</p>
           </div>
         </div>
       )}

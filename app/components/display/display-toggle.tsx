@@ -16,11 +16,11 @@ export function DisplayToggle(props: DisplayToggleProps) {
       <TabsList className="grid grid-cols-2">
         <TabsTrigger value="webcam" className="h-full space-x-2">
           <Camera className="size-3.5 text-muted-foreground" />
-          <span className="leading-none">Webcam</span>
+          <span className="leading-none">webcam</span>
         </TabsTrigger>
         <TabsTrigger value="upload" className="h-full space-x-2">
           <Upload className="size-3.5 text-muted-foreground" />
-          <span className="leading-none">Upload</span>
+          <span className="leading-none">upload</span>
         </TabsTrigger>
       </TabsList>
     </Tabs>

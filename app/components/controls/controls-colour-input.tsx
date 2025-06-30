@@ -45,11 +45,11 @@ function ColourInfo({ colour }: ColourInfoProps) {
   return (
     <div className="flex items-center gap-4">
       <div className="flex flex-col gap-1">
-        <ControlsHeadingLabel>Hex</ControlsHeadingLabel>
+        <ControlsHeadingLabel>hex</ControlsHeadingLabel>
         <span className="text-xs">{colour || "-"}</span>
       </div>
       <div className="flex flex-col gap-1">
-        <ControlsHeadingLabel>RGB</ControlsHeadingLabel>
+        <ControlsHeadingLabel>rgb</ControlsHeadingLabel>
         <span className="text-xs">
           {colour ? `(${hexToRgb(colour)})` : "-"}
         </span>
@@ -65,7 +65,7 @@ interface ColourPresetsProps {
 function ColourPresets({ colour, onChange }: ColourPresetsProps) {
   return (
     <div className="flex flex-col gap-1">
-      <ControlsHeadingLabel>Presets</ControlsHeadingLabel>
+      <ControlsHeadingLabel>presets</ControlsHeadingLabel>
 
       <div className="flex justify-between gap-1">
         <Tooltip>
@@ -83,7 +83,7 @@ function ColourPresets({ colour, onChange }: ColourPresetsProps) {
               )}
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Source</TooltipContent>
+          <TooltipContent>source</TooltipContent>
         </Tooltip>
         {ASCII_COLOUR_PRESETS.map((preset) => (
           <Tooltip key={preset}>

@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
     const address = req.nextUrl.pathname.split("/").pop()
 
     if (!ethers.isAddress(address)) {
-      return NextResponse.json({ error: "Invalid wallet address" }, { status: 400 })
+      return NextResponse.json({ error: "invalid wallet address" }, { status: 400 })
     }
 
     const contract = new ethers.Contract(
@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
     if (!idOf) {
       // Return fake user data if `fid` is not found
       const fakeUserData = {
-        name: "Anonymous",
+        name: "anonymous",
         fname: truncateAddress(address), // Generate a fake username from the wallet address
         pfp: "https://www.asciicast.com/icon.jpg", // Placeholder profile picture URL
         fid: "0",
@@ -35,7 +35,7 @@ export async function GET(req: NextRequest) {
 
     const response = await fetch(`https://hub.pinata.cloud/v1/userDataByFid?fid=${fid}`)
     if (!response.ok) {
-      throw new Error(`Failed to fetch user data: ${response.statusText}`)
+      throw new Error(`failed to fetch user data: ${response.statusText}`)
     }
 
     const userData = await response.json()
@@ -55,7 +55,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ name, fname, pfp, fid })
   } catch (error) {
-    console.error("Error fetching ID:", error)
-    return NextResponse.json({ error: "Failed to fetch ID from contract" }, { status: 500 })
+    console.error("error fetching ID:", error)
+    return NextResponse.json({ error: "failed to fetch ID from contract" }, { status: 500 })
   }
 }
