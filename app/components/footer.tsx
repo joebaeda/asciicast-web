@@ -1,3 +1,4 @@
+import { asciiCastAddress } from "@/lib/contract";
 import React from "react";
 
 const Footer: React.FC = () => {
@@ -20,11 +21,10 @@ const Footer: React.FC = () => {
 
             {/* Right Section: Social Links */}
             <div className="flex p-2 md:p-4 space-x-4">
-                
 
                 {/* Basescan */}
                 <a
-                    href="https://basescan.org"
+                    href={`https://basescan.org/address/${asciiCastAddress}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-600 hover:text-blue-500"

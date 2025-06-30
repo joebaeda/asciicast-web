@@ -1,7 +1,7 @@
 "use client"
 
 import { ArrowLeftRight, Lock, RefreshCcw, Unlock } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from 'next/image';
 
 import { useAsciiProvider } from "@/context/AsciiProvider";
@@ -31,98 +31,21 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "../../components/ui/tooltip";
-import { BaseError, useAccount, useBalance, useChainId, useDisconnect, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
-import { asciiCastAbi, asciiCastAddress } from "@/lib/contract";
-import { base } from "wagmi/chains";
+import { useAccount, useDisconnect } from "wagmi";
 import { Card, CardHeader } from "../ui/card";
-
-type UserData = {
-  name: string;
-  fname: string;
-  pfp: string;
-  fid: string;
-}
+import { truncateAddress } from "@/lib/truncateAddress";
 
 export function Controls() {
   const { config, updateConfig } = useAsciiProvider();
   const [isAspectRatioLocked, setIsAspectRatioLocked] = useState(true);
-  const [showError, setShowError] = useState(false);
   const [aspectRatio, setAspectRatio] = useState(
     config.outputWidth / config.outputHeight,
   );
   const [isInverted, setIsInverted] = useState(false);
-  const [profile, setProfile] = useState<UserData>({
-    name: "",
-    fname: "",
-    pfp: "",
-    fid: "",
-  })
 
-  // Wagmi
-  const contractBalance = useBalance({
-    address: asciiCastAddress,
-    chainId: base.id,
-  })
-
-  const chainId = useChainId();
-  const { address, isConnected } = useAccount()
+  // wagmi
+  const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect()
-  const { data: hash, error, isPending, writeContract } = useWriteContract()
-  const { isLoading: isConfirming, isSuccess: isConfirmed } =
-    useWaitForTransactionReceipt({
-      hash,
-    })
-
-  const handleBuyAscii = async () => {
-    try {
-      if (Number(contractBalance.data?.value) > 0) {
-        writeContract({
-          abi: asciiCastAbi,
-          chainId: base.id,
-          address: asciiCastAddress as `0x${string}`,
-          functionName: "buyASCIIToken",
-        })
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        if (isConnected) {
-          // Check if user data is in localStorage first
-          const storedData = localStorage.getItem(`userData-${address}`);
-          
-          if (storedData) {
-            // If data is found in localStorage, use it
-            setProfile(JSON.parse(storedData));
-          } else {
-            // If data is not found, call the API to fetch it
-            const res = await fetch(`/api/idOf/${address}`, {
-              method: 'GET',
-            });
-
-            if (!res.ok) {
-              throw new Error(`failed to fetch user data: ${res.statusText}`);
-            }
-
-            const userData: UserData = await res.json();
-            setProfile(userData); // Populate profile state
-            
-            // Save the fetched data to localStorage
-            localStorage.setItem(`userData-${address}`, JSON.stringify(userData));
-          }
-        }
-      } catch (err) {
-        console.error('error fetching user data:', err);
-      }
-    }
-
-    // Call fetchData when address or isConnected changes
-    fetchData();
-  }, [address, isConnected]);
 
   function handleWidthChange(width: number) {
     if (isAspectRatioLocked) {
@@ -166,23 +89,23 @@ export function Controls() {
         <SidebarSeparator className="-ml-2 -mr-2 mt-2" />
       </div>
 
-      {/* Farcaster User */}
+      {/* User */}
       {isConnected &&
         <Card>
           <CardHeader className="flex space-x-3 justify-between items-center">
             <div className="flex flex-row justify-center items-center space-x-3">
               <div className="w-16 h-16 rounded-full overflow-hidden">
                 <Image
-                  src={profile.pfp || "/placeholder/pfp.svg"}
-                  alt={profile.name}
+                  src={"/icon.jpg"}
+                  alt={"anon"}
                   width={96}
                   height={96}
                   className="object-cover"
                 />
               </div>
               <div className="flex flex-col justify-start">
-                <h2 className="text-lg font-bold">{profile.name}</h2>
-                <p className="text-foreground/60">@{profile.fname}</p>
+                <h2 className="text-lg font-bold">anon</h2>
+                <p className="text-foreground/60">{truncateAddress(address as `0x${string}`)}</p>
               </div>
             </div>
             <Tooltip>
@@ -336,39 +259,6 @@ export function Controls() {
             </Button>
           </div>
         </div>
-
-        {Number(contractBalance.data?.value) > 0 && (
-          <div className="mt-5">
-            <Button
-              onClick={handleBuyAscii}
-              variant="secondary"
-              disabled={chainId !== base.id || isPending || isConfirming || isConfirmed}
-              className="w-full py-5 rounded-xl bg-pink-900 hover:bg-pink-950"
-            >
-              {isPending
-                ? "confirming..."
-                : isConfirming
-                  ? "waiting..."
-                  : isConfirmed ? "got it! 🎉" : "buy $ASCII"}
-            </Button>
-          </div>
-        )}
-
-        {/* Transaction Error */}
-        {showError && error && (
-          <div className="fixed flex p-4 inset-0 items-center justify-center z-50 bg-gray-900 bg-opacity-65">
-            <div className="w-full h-full items-center justify-center rounded-lg p-4 flex flex-col max-h-[360px] max-w-[360px] mx-auto bg-[#250f31] space-y-4">
-              <p className="text-center text-white">error: {(error as BaseError).shortMessage || error.message}</p>
-              <Button
-                onClick={() => setShowError(false)}
-                variant="secondary"
-                disabled={isPending}
-              >
-                close
-              </Button>
-            </div>
-          </div>
-        )}
 
       </div>
 

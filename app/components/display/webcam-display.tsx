@@ -26,13 +26,6 @@ import { Wallets } from "../wallets";
 import Footer from "../footer";
 import InstallPWA from "../pwa/install";
 
-type ArtistProps = {
-  name: string;
-  fname: string;
-  pfp: string;
-  fid: string;
-}
-
 export function WebcamDisplay() {
   const { config } = useAsciiProvider();
   const {
@@ -61,15 +54,9 @@ export function WebcamDisplay() {
   const [showError, setShowError] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isConnectWalletOpen, setConnectWalletOpen] = useState(false);
-  const [artist, setArtist] = useState<ArtistProps>({
-    name: "",
-    fname: "",
-    pfp: "",
-    fid: "",
-  });
 
   const chainId = useChainId()
-  const { address, isConnected } = useAccount()
+  const { isConnected } = useAccount()
   const { data: hash, error, isPending, writeContract } = useWriteContract()
 
   const { data: tokenId } = useReadContract({
@@ -84,16 +71,6 @@ export function WebcamDisplay() {
     })
 
   useEffect(() => {
-    if (isConnected) {
-      const storedData = localStorage.getItem(`userData-${address}`);
-      if (storedData) {
-        const artistData: ArtistProps = JSON.parse(storedData);
-        setArtist(artistData)
-      }
-    }
-  }, [address, isConnected])
-
-  useEffect(() => {
     if (error) {
       setShowError(true)
     }
@@ -105,7 +82,7 @@ export function WebcamDisplay() {
 
       const message = {
         castText: "a new ascii video has been minted onchain",
-        siteUrl: `https://opensea.io/assets/base/0x837969d05cb1c8108356bc49e58e568c2698d90c/${Number(tokenId) + 1}`,
+        siteUrl: `https://opensea.io/assets/base/0x9a8F40732a3a75aaaaf26E631174002B1476F3DA/${Number(tokenId) + 1}`,
       }
 
       const response = await fetch("/api/share-cast", {
@@ -162,7 +139,7 @@ export function WebcamDisplay() {
           address: asciiCastAddress as `0x${string}`,
           functionName: "mint",
           value: parseEther("0.003"),
-          args: [`ipfs://${ipfsImageHash}`, `ipfs://${ipfsAnimationHash}`, `@${artist.fname}`, animationColor, animationPreset, String(artist.fid)],
+          args: [`ipfs://${ipfsImageHash}`, `ipfs://${ipfsAnimationHash}`, animationColor, animationPreset],
         });
 
         await shareCast()
